@@ -1,0 +1,119 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Note Taker</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper" class="fade-in">
+
+				<!-- Intro -->
+					<div id="intro">
+						<h1>Note Taker</h1>
+						<p>Empowering Efficiency: Capture, Organize, Conquer with our Fully Responsive Note-Taking App!</p>
+						<ul class="actions">
+							<li><a href="#header" class="button icon solid solo fa-arrow-down scrolly">Continue</a></li>
+						</ul>
+					</div>
+
+				<!-- Header -->
+					<header id="header">
+						<a href="home" class="logo">Note Taker</a>
+					</header>
+
+				<!-- Nav -->
+					<nav id="nav">
+						<ul class="links">
+							<li class="active"><a href="home">Home</a></li>
+							<li><a href="hub">Global Musings Hub</a></li>
+							<li><a href="quote">Daily Inspiration Digest</a></li>
+						</ul>
+						<ul class="icons">
+							<li><a href="https://gitlab.rnl.tecnico.ulisboa.pt/agisit/agisit23-g1" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Featured Post -->
+							<article class="post featured">
+								<header class="major">
+									<h2><a href="#">Start Your<br />
+									Note Journey</a></h2>
+									<p>Welcome to the ultimate note-taking experience! Elevate your productivity with our innovative app, designed to capture and organize your ideas effortlessly. Enjoy seamless access across all devices through our fully responsive website, and unlock your full creative potential with intuitive features tailored for your convenience and success.</p>
+								</header>
+								<a href="#" class="image main"><img src="{{ url_for('static', filename='images/pic01.jpg') }}" alt="" /></a>
+								<ul class="actions special">
+									<li><a href="#" class="button large">Go to My Profile</a></li>
+								</ul>
+							</article>
+
+						<!-- Posts -->
+							<section class="posts">
+								<article>
+									<header>
+										<h2><a href="hub">Global Musings<br />
+											Hub</a></h2>
+									</header>
+									<a href="hub" class="image fit"><img src="{{ url_for('static', filename='images/pic02.jpg') }}" alt="" /></a>
+									<p>Explore a diverse array of thoughts and insights from around the world. Immerse yourself in a rich tapestry of ideas and perspectives, sourced globally to inspire, inform, and broaden your worldview. Engage with a vibrant community of thinkers and expand your horizons with every click.</p>
+									<ul class="actions special">
+										<li><a href="hub" class="button">Start</a></li>
+									</ul>
+								</article>
+								<article>
+									<header>
+										<h2><a href="quote">Daily Inspiration<br />
+											Digest</a></h2>
+									</header>
+									<a href="quote" class="image fit"><img src="{{ url_for('static', filename='images/pic03.jpg') }}" alt="" /></a>
+									<p>Start each day on a positive note with our curated collection of daily reflections. Delve into a thoughtfully selected assortment of motivational quotes, uplifting messages, and thought-provoking prompts tailored to invigorate your mind and spirit. Embrace the power of daily inspiration and set the tone for a fulfilling and productive day ahead.</p>
+									<ul class="actions special">
+										<li><a href="quote" class="button">Start</a></li>
+									</ul>
+								</article>
+							</section>
+
+					</div>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<section>
+							<form action="/store_thought" method="post">
+								<div class="fields">
+									<div class="field">
+										<label for="message">Share your Thoughts with the World</label>
+										<textarea id="message" type="text" name="text" rows="3"></textarea>
+									</div>
+								</div>
+								<ul class="actions">
+									<li><input type="submit" value="Share" /></li>
+								</ul>
+							</form>
+						</section>
+					</footer>
+
+				<!-- Copyright -->
+					<div id="copyright">
+						<ul><li>&copy; AGISIT 2023-2024</li><li>Group 1</a></li></ul>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+		<script src="{{ url_for('static', filename='assets/js/jquery.min.js') }}"></script>
+		<script src="{{ url_for('static', filename='assets/js/jquery.scrollex.min.js') }}"></script>
+		<script src="{{ url_for('static', filename='assets/js/jquery.scrolly.min.js') }}"></script>
+		<script src="{{ url_for('static', filename='assets/js/browser.min.js') }}"></script>
+		<script src="{{ url_for('static', filename='assets/js/breakpoints.min.js') }}"></script>
+		<script src="{{ url_for('static', filename='assets/js/util.js') }}"></script>
+		<script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+
+	</body>
+</html>
