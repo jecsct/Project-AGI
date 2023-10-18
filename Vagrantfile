@@ -32,8 +32,8 @@ Vagrant.configure("2") do |config|
     mgvb.vm.provider "virtualbox" do |vb|
       vb.name = "mgmt"
       vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-      vb.memory = "1024"
-      vb.cpus = 1
+      vb.memory = "2048"
+      vb.cpus = 2
     end # of vb
     # Shared folders
     if Vagrant::Util::Platform.windows? then
