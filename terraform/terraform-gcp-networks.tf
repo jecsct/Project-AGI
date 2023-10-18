@@ -10,9 +10,22 @@ resource "google_compute_firewall" "frontend_rules" {
 
   allow {
     protocol = "tcp"
-    ports = ["80", "443"]
+    ports = ["80", "443", "5000"]
   }
 
   source_ranges = ["0.0.0.0/0"]
   target_tags = ["balancer"]
+}
+
+resource "google_compute_firewall" "database_rules" {
+  name    = "database"
+  network = "default"
+
+  allow {
+    protocol = "tcp"
+    ports = ["3306", ]
+  }
+
+  source_ranges = ["0.0.0.0/0"]
+  target_tags = ["database"]
 }

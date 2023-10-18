@@ -6,8 +6,8 @@ app = Flask(__name__)
 
 # MySQL Configuration
 db = pymysql.connect(host='localhost',
-                     user='root',
-                     password='root',
+                     user='admin',
+                     password='admin',
                      database='notes')
 
 cursor = db.cursor()
