@@ -3,19 +3,27 @@
 
 # Modify the line with the ansible_host for the public IP address of your Tenant
 # For that, un-comment the following line before running instances configuration
-balancer    ansible_host=35.246.62.246 ansible_user=ubuntu ansible_connection=ssh
-database    ansible_host=34.89.18.227 ansible_user=ubuntu ansible_connection=ssh
-web1        ansible_host=34.89.90.225 ansible_user=ubuntu ansible_connection=ssh
-web2        ansible_host=34.89.6.137 ansible_user=ubuntu ansible_connection=ssh
+balancer    ansible_host=35.242.138.90 ansible_user=ubuntu ansible_connection=ssh
+database    ansible_host=34.89.38.112 ansible_user=ubuntu ansible_connection=ssh
 
-# The local deployment host VM
+web1        ansible_host=34.147.190.6 ansible_user=ubuntu ansible_connection=ssh
+#web2        ansible_host=34.147.190.6 ansible_user=ubuntu ansible_connection=ssh
+
+get1        ansible_host=34.147.167.161 ansible_user=ubuntu ansible_connection=ssh
+#get2        ansible_host=34.147.167.161 ansible_user=ubuntu ansible_connection=ssh
+
+send1        ansible_host=34.105.218.140 ansible_user=ubuntu ansible_connection=ssh
+#send2        ansible_host=34.105.218.140 ansible_user=ubuntu ansible_connection=ssh
+
+quote1        ansible_host=35.246.123.216 ansible_user=ubuntu ansible_connection=ssh
+#quote2        ansible_host=35.246.123.216 ansible_user=ubuntu ansible_connection=ssh
+
 [osmgmt]
 localhost           ansible_connection=local
 
-# Contains the web servers
 [web]
 web1
-web2
+#web2
 
 [database]
 database
@@ -23,8 +31,27 @@ database
 [loadbalancer]
 balancer
 
+[quote]
+quote1
+#quote2
+
+[send_thought]
+send1
+#send2
+
+[get_thought]
+get1
+#get2
+
 [targets]
 balancer
 database
 web1
-web2
+#web2
+get1
+#get2
+send1
+#send2
+quote1
+#quote2
+

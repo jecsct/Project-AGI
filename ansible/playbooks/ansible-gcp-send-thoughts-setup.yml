@@ -1,0 +1,53 @@
+---
+- hosts: send_thought
+  gather_facts: True
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
+
+  tasks:
+    - name: Add NGINX Repository
+      apt_repository:
+        repo: ppa:nginx/stable
+        state: present
+
+    - name: Install NGINX
+      apt:
+        pkg: nginx
+        state: present
+
+    - name: Install Python3 and pip
+      apt:
+        name:
+          - python3
+          - pip
+        state: present
+
+    - name: Deploy Flask Content
+      ansible.builtin.synchronize:
+        src: /home/vagrant/project/application/services/send_thought_service.py
+        dest: /var/www/html/send_thought_service.py
+
+    - name: Install required pip packages
+      pip:
+        name:
+          - flask
+          - requests
+          - pymysql
+          - gunicorn
+        state: present
+
+    - name: Bind gunicorn
+      become: yes
+      raw: cd /var/www/html && nohup gunicorn --bind 0.0.0.0:8003 app:app > /dev/null 2>&1 &
+
+    - name: Allow Port 8003
+      ufw:
+        rule: allow
+        port: 8003
+
+  handlers:
+    - name: restart nginx
+      service:
+        name: nginx
+        state: restarted

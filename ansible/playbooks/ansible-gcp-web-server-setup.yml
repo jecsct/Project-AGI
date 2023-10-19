@@ -1,0 +1,54 @@
+---
+- hosts: web
+  gather_facts: True
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
+
+  tasks:
+    - name: Add NGINX Repository
+      apt_repository:
+        repo: ppa:nginx/stable
+        state: present
+
+    - name: Install NGINX
+      apt:
+        pkg: nginx
+        state: present
+
+    - name: Install Python3 and pip
+      apt:
+        name:
+          - python3
+          - pip
+        state: present
+
+    - name: Deploy Flask Website Content
+      ansible.builtin.synchronize:
+        src: /home/vagrant/project/application
+        dest: /var/www/html
+
+    - name: Install required pip packages
+      pip:
+        name:
+          - flask
+          - requests
+          - cryptography
+          - pymysql
+          - gunicorn
+        state: present
+
+    - name: Bind gunicorn
+      become: yes
+      raw: cd /var/www/html/application && nohup gunicorn --bind 0.0.0.0:8000 app:app > /dev/null 2>&1 &
+
+    - name: Allow Port 8000
+      ufw:
+        rule: allow
+        port: 8000
+
+  handlers:
+    - name: restart nginx
+      service:
+        name: nginx
+        state: restarted

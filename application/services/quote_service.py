@@ -10,4 +10,4 @@ def get_inspiring_quote():
     return jsonify({"author": data[0]['a'], "quote": data[0]['q']})
 
 if __name__ == "__main__":
-    app.run(port=8001)
+    app.run(host="0.0.0.0", port=8001)

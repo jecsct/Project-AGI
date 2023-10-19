@@ -1,7 +1,5 @@
-# Terraform google cloud multi tier deployment
+# Terraform Google Cloud Deployment
 
-# check how configure the provider here:
-# https://www.terraform.io/docs/providers/google/index.html
 provider "google" {
     credentials = file("../agisit-project-g1-key.json")
     project = var.GCP_PROJECT_ID

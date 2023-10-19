@@ -1,0 +1,31 @@
+---
+- hosts: targets
+  gather_facts: no
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
+
+  pre_tasks:
+    - name: Remove require tty - alt
+      lineinfile:
+        regexp: "requiretty"
+        dest: /etc/sudoers.d/os_defaults
+        state: absent
+
+    - name: Validate the sudoers file before saving  not to require password
+      lineinfile:
+        dest: /etc/sudoers
+        state: present
+        regexp: '^%ADMIN ALL='
+        line: '%ADMIN ALL=(ALL) NOPASSWD: ALL'
+        validate: /usr/sbin/visudo -cf %s
+
+    - name: Install SSH key
+      authorized_key:
+        user: ubuntu
+        key: "{{ lookup('file', '/home/vagrant/.ssh/id_rsa.pub') }}"
+        state: present
+    
+    - name: Update apt cache
+      apt:
+        update_cache: yes    

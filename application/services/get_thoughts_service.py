@@ -11,8 +11,7 @@ cursor = database.cursor()
 def hub():
     cursor.execute("SELECT text FROM thoughts")
     data = cursor.fetchall()
-    print([row[0] for row in data])
     return [row[0] for row in data]
 
 if __name__ == '__main__':
-    app.run(port=8002)
+    app.run(host="0.0.0.0", port=8002)
