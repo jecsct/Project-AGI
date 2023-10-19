@@ -5,7 +5,7 @@ import pymysql
 app = Flask(__name__)
 
 # MySQL Configuration
-db = pymysql.connect(host='localhost',
+db = pymysql.connect(host='34.89.18.227',
                      user='admin',
                      password='admin',
                      database='notes')
@@ -51,4 +51,4 @@ def quote():
     return render_template('daily.html', quote=quote)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0", debug=True)

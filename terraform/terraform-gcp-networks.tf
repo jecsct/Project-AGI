@@ -17,13 +17,26 @@ resource "google_compute_firewall" "frontend_rules" {
   target_tags = ["balancer"]
 }
 
+resource "google_compute_firewall" "web_rules" {
+  name    = "web"
+  network = "default"
+
+  allow {
+    protocol = "tcp"
+    ports = ["5000"]
+  }
+
+  source_ranges = ["0.0.0.0/0"]
+  target_tags = ["web"]
+}
+
 resource "google_compute_firewall" "database_rules" {
   name    = "database"
   network = "default"
 
   allow {
     protocol = "tcp"
-    ports = ["3306", ]
+    ports = ["27017", "3306"]
   }
 
   source_ranges = ["0.0.0.0/0"]
