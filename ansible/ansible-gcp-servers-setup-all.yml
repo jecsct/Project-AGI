@@ -147,6 +147,11 @@
           - gunicorn
         state: present
 
+    - name: Allow Port 3306
+      ufw:
+        rule: allow
+        port: 3306
+
     
     
 
@@ -194,6 +199,11 @@
     - name: Bind gunicorn
       become: yes
       raw: cd /var/www/html/application && nohup gunicorn --bind 0.0.0.0:5000 app:app > /dev/null 2>&1 &
+
+    - name: Allow Port 5000
+      ufw:
+        rule: allow
+        port: 5000
 
   # The handler is common to the nginx installation steps
   handlers:

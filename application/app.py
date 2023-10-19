@@ -1,34 +1,16 @@
 from flask import Flask, render_template, request, redirect
 import requests
-import pymysql
+import re
 
 app = Flask(__name__)
 
-# MySQL Configuration
-db = pymysql.connect(host='34.89.18.227',
-                     user='admin',
-                     password='admin',
-                     database='notes')
-
-cursor = db.cursor()
-
-# Needs to have Database configuration prior to this.
-cursor.execute("CREATE TABLE IF NOT EXISTS thoughts (id INT AUTO_INCREMENT PRIMARY KEY, text VARCHAR(255))")
-
-# MySQL Functions.
-@app.route('/store_thought', methods=['POST'])
-def store_thought():
+@app.route('/send_thought', methods=['POST'])
+def send_thought():
     if request.method == 'POST':
-        text = request.form['text']
-        cursor.execute("INSERT INTO thoughts (text) VALUES (%s)", (text,))
-        db.commit()
-        return redirect('/hub')
-
-# HTML Routing.
-def get_inspiring_quote():
-    response = requests.get("https://zenquotes.io/api/random")
-    data = response.json()
-    return data[0]['q']
+        response = requests.post('http://localhost:8003/send_thought_service', json={'thought': request.form['text']})
+        if response.status_code == 200:
+            return redirect('/hub')
+    return redirect('/')
 
 @app.route('/')
 def index():
@@ -40,15 +22,14 @@ def home():
 
 @app.route('/hub')
 def hub():
-    cursor.execute("SELECT text FROM thoughts")
-    data = cursor.fetchall()
-    texts = [row[0] for row in data]
-    return render_template('hub.html', texts=texts)
+    response = requests.get("http://localhost:8002/get_thoughts_service")
+    return render_template('hub.html', texts=response.json())
 
 @app.route('/quote')
 def quote():
-    quote = get_inspiring_quote()
-    return render_template('daily.html', quote=quote)
+    response = requests.get("http://localhost:8001/quote_service")
+    text = response.json()['quote'] + " - " + response.json()['author']
+    return render_template('daily.html', quote=text)
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", debug=True)
+    app.run(host="0.0.0.0", port=8000, debug=True)

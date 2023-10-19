@@ -36,7 +36,7 @@ resource "google_compute_firewall" "database_rules" {
 
   allow {
     protocol = "tcp"
-    ports = ["27017", "3306"]
+    ports = ["3306"]
   }
 
   source_ranges = ["0.0.0.0/0"]
