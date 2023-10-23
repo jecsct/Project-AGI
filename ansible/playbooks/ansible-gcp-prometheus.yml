@@ -1,0 +1,47 @@
+---
+- hosts: prometheus
+  gather_facts: true
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
+
+  tasks:
+    - name: update /etc/hosts file for name resolution of self
+      lineinfile:
+        dest: /etc/hosts
+        regexp: '.*{{ item }}$'
+        line: "127.0.0.1 {{item}}"
+        state: present
+      with_items: prometheus
+
+    - name: update /etc/hosts file for name resolution
+      lineinfile:
+        dest: /etc/hosts
+        regexp: '.*{{ item }}$'
+        line: "{{ hostvars[item]['ansible_default_ipv4']['address'] }} {{item}}"
+        state: present
+      when: hostvars[item]['ansible_default_ipv4']['address'] is defined
+      with_items: '{{groups.web}}'
+
+    - name: Install Prometheus
+      apt:
+        pkg: ['prometheus']
+        state: latest
+    
+    - name: Start and enable Prometheus service
+      service:
+        name: prometheus
+        state: started
+        enabled: yes
+    
+    - name: Copy Prometheus configuration file
+      copy:
+        src: "prometheus-config.yml"
+        dest: "/etc/prometheus/prometheus.yml"
+      notify: restart prometheus
+
+  handlers:
+  - name: restart prometheus
+    service:
+      name: prometheus
+      state: restarted

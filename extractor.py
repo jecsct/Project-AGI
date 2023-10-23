@@ -58,6 +58,12 @@ send1
 [get_thought]
 get1
 
+[prometheus]
+prometheus
+
+[grafana]
+grafana
+
 [targets]
 balancer
 database
@@ -66,6 +72,8 @@ web2
 get1
 send1
 quote1
+prometheus
+grafana
 """
 
 with open('gcphosts', 'w') as file:

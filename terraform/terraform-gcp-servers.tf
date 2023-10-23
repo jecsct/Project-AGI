@@ -163,3 +163,56 @@ resource "google_compute_instance" "get" {
   tags = ["get"]
 }
 
+###########  Prometheus   #############
+resource "google_compute_instance" "prometheus" {
+    name = "prometheus"
+    machine_type = var.GCP_MACHINE_TYPE
+    zone = "europe-west1-c" #we can't have more than 8 IPs in a given region, so Prometheus and Grafana are in other region
+
+    boot_disk {
+        initialize_params {
+        # image list can be found at:
+        # https://console.cloud.google.com/compute/images
+        image = "ubuntu-2004-focal-v20230918"
+        }
+    }
+
+    network_interface {
+        network = "default"
+        access_config {
+        }
+    }
+
+    metadata = {
+      ssh-keys = "ubuntu:${file("/home/vagrant/.ssh/id_rsa.pub")}"
+    }
+
+  tags = ["prometheus"]
+}
+
+###########  Grafana   #############
+resource "google_compute_instance" "grafana" {
+    name = "grafana"
+    machine_type = var.GCP_MACHINE_TYPE
+    zone = "europe-west1-c"
+
+    boot_disk {
+        initialize_params {
+        # image list can be found at:
+        # https://console.cloud.google.com/compute/images
+        image = "ubuntu-2004-focal-v20230918"
+        }
+    }
+
+    network_interface {
+        network = "default"
+        access_config {
+        }
+    }
+
+    metadata = {
+      ssh-keys = "ubuntu:${file("/home/vagrant/.ssh/id_rsa.pub")}"
+    }
+
+  tags = ["grafana"]
+}

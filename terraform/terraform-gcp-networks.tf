@@ -81,3 +81,29 @@ resource "google_compute_firewall" "database_rules" {
   source_ranges = ["0.0.0.0/0"]
   target_tags = ["database"]
 }
+
+resource "google_compute_firewall" "prometheus_rules" {
+  name    = "prometheus"
+  network = "default"
+
+  allow {
+    protocol = "tcp"
+    ports = ["9090"]
+  }
+
+  source_ranges = ["0.0.0.0/0"]
+  target_tags = ["prometheus"]
+}
+
+resource "google_compute_firewall" "grafana_rules" {
+  name    = "grafana"
+  network = "default"
+
+  allow {
+    protocol = "tcp"
+    ports = ["3000"]
+  }
+
+  source_ranges = ["0.0.0.0/0"]
+  target_tags = ["grafana"]
+}
