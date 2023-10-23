@@ -43,11 +43,8 @@
         state: present
 
     - name: Bind gunicorn
-      shell: "cd /var/www/html/application && gunicorn --bind 0.0.0.0:8003 app:app"
-      async: 0
-      poll: 0
-      ignore_errors: true
-      no_log: true
+      become: yes
+      raw: cd /var/www/html/application && nohup gunicorn --bind 0.0.0.0:8003 app:app > /dev/null 2>&1 &
 
     - name: Allow Port 8003
       ufw:
