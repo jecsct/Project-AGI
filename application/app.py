@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect
+from config import send1, get1, quote1
 import requests
 import re
 
@@ -7,7 +8,7 @@ app = Flask(__name__)
 @app.route('/send_thought', methods=['POST'])
 def send_thought():
     if request.method == 'POST':
-        response = requests.post('http://localhost:8003/send_thought_service', json={'thought': request.form['text']})
+        response = requests.post('http://' + send1 + ':8003/send_thought_service', json={'thought': request.form['text']})
         if response.status_code == 200:
             return redirect('/hub')
     return redirect('/')
@@ -22,12 +23,12 @@ def home():
 
 @app.route('/hub')
 def hub():
-    response = requests.get("http://localhost:8002/get_thoughts_service")
+    response = requests.get("http://" + get1 + ":8002/get_thoughts_service")
     return render_template('hub.html', texts=response.json())
 
 @app.route('/quote')
 def quote():
-    response = requests.get("http://localhost:8001/quote_service")
+    response = requests.get("http://" + quote1 + ":8001/quote_service")
     text = response.json()['quote'] + " - " + response.json()['author']
     return render_template('daily.html', quote=text)
 

@@ -37,8 +37,11 @@
         state: present
 
     - name: Bind gunicorn
-      become: yes
-      raw: cd /var/www/html && nohup gunicorn --bind 0.0.0.0:8001 app:app > /dev/null 2>&1 &
+      shell: "cd /var/www/html/application && gunicorn --bind 0.0.0.0:8001 app:app"
+      async: 0
+      poll: 0
+      ignore_errors: true
+      no_log: true
 
     - name: Allow Port 8001
       ufw:

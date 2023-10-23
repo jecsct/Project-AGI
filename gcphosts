@@ -1,0 +1,39 @@
+balancer	ansible_host=34.147.205.241 ansible_user=ubuntu ansible_connection=ssh
+database	ansible_host=34.147.146.234 ansible_user=ubuntu ansible_connection=ssh
+get1	ansible_host=34.142.31.149 ansible_user=ubuntu ansible_connection=ssh
+quote1	ansible_host=34.89.16.241 ansible_user=ubuntu ansible_connection=ssh
+send1	ansible_host=34.147.194.229 ansible_user=ubuntu ansible_connection=ssh
+web1	ansible_host=34.147.225.36 ansible_user=ubuntu ansible_connection=ssh
+web2	ansible_host=34.147.202.212 ansible_user=ubuntu ansible_connection=ssh
+
+
+[osmgmt]
+localhost           ansible_connection=local
+
+[web]
+web1
+web2
+
+[database]
+database
+
+[loadbalancer]
+balancer
+
+[quote]
+quote1
+
+[send_thought]
+send1
+
+[get_thought]
+get1
+
+[targets]
+balancer
+database
+web1
+web2
+get1
+send1
+quote1

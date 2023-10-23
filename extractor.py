@@ -1,0 +1,74 @@
+import re
+
+# Read the terraform outputs from the file
+with open('terraform/outputs', 'r') as file:
+    lines = file.readlines()
+    last_lines = lines[-19:]
+    terraform_output = ''.join(last_lines) 
+
+# Extract IP addresses using regular expressions
+ip_addresses = re.findall(r'[0-9]+(?:\.[0-9]+){3}', terraform_output)
+
+# Mapping names to IP addresses
+ip_mapping = {
+    "balancer": ip_addresses[0],
+    "database": ip_addresses[1],
+    "get1": ip_addresses[2],
+    "quote1": ip_addresses[3],
+    "send1": ip_addresses[4],
+    "web1": ip_addresses[5],
+    "web2": ip_addresses[6]
+}
+
+# Extract specific values in the required format
+required_ips = {key: f"{key} = \"{value}\"" for key, value in ip_mapping.items() if key in ["send1", "quote1", "get1", "database"]}
+
+# Overwrite the file with the new lines
+with open('application/config.py', 'w') as file:
+    for line in required_ips.values():
+        file.write(f"{line}" + "\n")
+
+# Generating the hosts file content
+hosts_file_content = ""
+for key, value in ip_mapping.items():
+    hosts_file_content += f"{key}\tansible_host={value} ansible_user=ubuntu ansible_connection=ssh\n"
+
+# Appending the additional content
+additional_content = """
+
+[osmgmt]
+localhost           ansible_connection=local
+
+[web]
+web1
+web2
+
+[database]
+database
+
+[loadbalancer]
+balancer
+
+[quote]
+quote1
+
+[send_thought]
+send1
+
+[get_thought]
+get1
+
+[targets]
+balancer
+database
+web1
+web2
+get1
+send1
+quote1
+"""
+
+with open('gcphosts', 'w') as file:
+    file.write(hosts_file_content + additional_content)
+
+print("Hosts file generated successfully.")

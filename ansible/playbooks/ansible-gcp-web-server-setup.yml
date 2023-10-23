@@ -38,9 +38,12 @@
           - gunicorn
         state: present
 
-    - name: Bind gunicorn
-      become: yes
-      raw: cd /var/www/html/application && nohup gunicorn --bind 0.0.0.0:8000 app:app > /dev/null 2>&1 &
+    - name: Start Flask Application
+      shell: "cd /var/www/html/application && gunicorn --bind 0.0.0.0:8000 app:app"
+      async: 0
+      poll: 0
+      ignore_errors: true
+      no_log: true
 
     - name: Allow Port 8000
       ufw:

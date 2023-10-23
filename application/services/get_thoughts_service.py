@@ -1,10 +1,11 @@
 from flask import Flask
+from config import database
 import pymysql
 
 app = Flask(__name__)
 
 # MySQL Configuration
-database = pymysql.connect(host='localhost', user='root', password='root', database='notes')
+database = pymysql.connect(host=database, user='root', password='root', database='notes')
 cursor = database.cursor()
 
 @app.route('/get_thoughts_service')
