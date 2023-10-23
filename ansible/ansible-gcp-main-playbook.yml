@@ -20,3 +20,9 @@
 - name: loadbalancer
   ansible.builtin.import_playbook: playbooks/ansible-gcp-load-balancer-setup.yml
 
+- name: prometheus
+  ansible.builtin.import_playbook: playbooks/ansible-gcp-prometheus.yml
+
+- name: grafana
+  ansible.builtin.import_playbook: playbooks/ansible-gcp-grafana.yml
+

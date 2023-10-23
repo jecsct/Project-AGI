@@ -1,0 +1,56 @@
+---
+- hosts: grafana
+  gather_facts: true
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
+
+  tasks:
+    - name: update /etc/hosts file for name resolution of self
+      lineinfile:
+        dest: /etc/hosts
+        regexp: '.*{{ item }}$'
+        line: "127.0.0.1 {{item}}"
+        state: present
+      with_items: grafana
+
+    - name: update /etc/hosts file for name resolution
+      lineinfile:
+        dest: /etc/hosts
+        regexp: '.*{{ item }}$'
+        line: "{{ hostvars[item]['ansible_default_ipv4']['address'] }} {{item}}"
+        state: present
+      when: hostvars[item]['ansible_default_ipv4']['address'] is defined
+      with_items: '{{groups.prometheus}}'
+
+    - name: add grafana gpg key
+      shell: curl https://packages.grafana.com/gpg.key | sudo apt-key add -
+
+    - name: add grafana repo 
+      apt_repository:
+        repo: deb https://packages.grafana.com/oss/deb stable main
+        state: present
+        filename: grafana
+
+    - name: Install Grafana
+      apt:
+        pkg: ['grafana']
+        state: latest
+    
+    - name: Start and enable Grafana service
+      service:
+        name: grafana-server
+        state: started
+        enabled: yes
+    
+    - name: Copy Grafana configuration file
+      copy:
+        src: "grafana.ini"
+        dest: "/etc/grafana/grafana.ini"
+      notify: restart grafana
+
+  handlers:
+  - name: restart grafana
+    service:
+      name: grafana-server
+      state: restarted
