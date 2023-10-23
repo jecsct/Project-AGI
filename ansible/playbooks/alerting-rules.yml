@@ -1,0 +1,47 @@
+groups:
+  - name: example-group
+    rules:
+      - alert: HighCPULoad
+        expr: node_cpu_seconds_total{mode="idle"} < 50
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High CPU Load Detected"
+          description: "CPU load is consistently high (idle < 50%) for 5 minutes."
+
+      - alert: HighMemoryUsage
+        expr: (node_memory_MemTotal - node_memory_MemFree - node_memory_Buffers - node_memory_Cached) / node_memory_MemTotal * 100 > 90
+        for: 10m
+        labels:
+          severity: critical
+        annotations:
+          summary: "High Memory Usage Detected"
+          description: "Memory usage is above 90% for 10 minutes."
+
+      - alert: DiskSpaceLow
+        expr: (node_filesystem_avail_bytes{mountpoint="/"} / node_filesystem_size_bytes{mountpoint="/"} * 100) < 10
+        for: 15m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Low Disk Space Detected"
+          description: "Available disk space on the root partition is below 10% for 15 minutes."
+
+      - alert: HTTPServerError
+        expr: up == 1 unless (http_requests_total / http_requests_total[5m] > 0.9)
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High HTTP Server Errors Detected"
+          description: "HTTP server is reporting a high rate of errors."
+
+      - alert: TargetDown
+        expr: up == 0
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Target is Down"
+          description: "The target is not responding."

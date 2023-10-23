@@ -39,6 +39,12 @@
         src: "prometheus-config.yml"
         dest: "/etc/prometheus/prometheus.yml"
       notify: restart prometheus
+    
+    - name: Copy Prometheus rules file
+      copy:
+        src: "alerting-rules.yml"
+        dest: "/etc/prometheus/alerting-rules.yml"
+      notify: restart prometheus
 
   handlers:
   - name: restart prometheus
