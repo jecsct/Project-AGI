@@ -33,3 +33,11 @@ output "get_thoughts_IPs"  {
 output "send_thoughts_IPs"  {
   value = formatlist("%s = %s", google_compute_instance.send[*].name, google_compute_instance.send[*].network_interface.0.access_config.0.nat_ip)
 }
+
+output "prometheus" {
+    value = join(" ", google_compute_instance.prometheus.*.network_interface.0.access_config.0.nat_ip)
+}
+
+output "grafana" {
+    value = join(" ", google_compute_instance.grafana.*.network_interface.0.access_config.0.nat_ip)
+}

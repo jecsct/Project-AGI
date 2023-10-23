@@ -62,7 +62,7 @@ resource "google_compute_firewall" "web_rules" {
 
   allow {
     protocol = "tcp"
-    ports = ["8000"]
+    ports = ["8000","9100"]
   }
 
   source_ranges = ["0.0.0.0/0"]
