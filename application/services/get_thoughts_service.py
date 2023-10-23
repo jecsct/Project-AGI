@@ -8,9 +8,12 @@ app = Flask(__name__)
 database = pymysql.connect(host=database, user='root', password='root', database='notes')
 cursor = database.cursor()
 
-@app.route('/get_thoughts_service')
+# In case that the Table does not exist, it creates it.
+cursor.execute("CREATE TABLE IF NOT EXISTS thoughts (id INT AUTO_INCREMENT PRIMARY KEY, text VARCHAR(255))")
+
+@app.route('/get_thoughts_service', methods=['GET'])
 def hub():
-    cursor.execute("SELECT text FROM thoughts")
+    cursor.execute("SELECT text FROM thoughts;")
     data = cursor.fetchall()
     return [row[0] for row in data]
 

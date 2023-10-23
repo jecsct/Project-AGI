@@ -38,7 +38,7 @@
 
     - name: Bind gunicorn
       become: yes
-      raw: cd /var/www/html/application && nohup gunicorn --bind 0.0.0.0:8001 app:app > /dev/null 2>&1 &
+      ansible.builtin.shell: cd /var/www/html && nohup gunicorn --bind 0.0.0.0:8001 quote_service:app > /dev/null 2>&1 &
 
     - name: Allow Port 8001
       ufw:
