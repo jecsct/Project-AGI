@@ -44,3 +44,10 @@ terraform.rc
 
 ### Vagrant Patch ###
 *.box
+
+
+### Custom config file ###
+
+/aplication/config.py
+/terraform/outputs
+gcphosts
