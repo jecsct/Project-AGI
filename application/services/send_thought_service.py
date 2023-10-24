@@ -1,12 +1,20 @@
 from flask import Flask, request, jsonify
-from config import database
-import pymysql
+from config import db
+import mysql.connector
 
 app = Flask(__name__)
 
 # MySQL Configuration
-database = pymysql.connect(host=database, user='root', password='root', database='notes')
-cursor = database.cursor()
+db_config = {
+    'host': db,
+    'user': 'admin',
+    'password': 'admin',
+    'database': 'notes',
+    'auth_plugin':'mysql_native_password',
+}
+
+connection = mysql.connector.connect(**db_config)
+cursor = connection.cursor()
 
 # In case that the Table does not exist, it creates it.
 cursor.execute("CREATE TABLE IF NOT EXISTS thoughts (id INT AUTO_INCREMENT PRIMARY KEY, text VARCHAR(255))")
@@ -14,8 +22,9 @@ cursor.execute("CREATE TABLE IF NOT EXISTS thoughts (id INT AUTO_INCREMENT PRIMA
 @app.route('/send_thought_service', methods=['POST'])
 def send_thought_service():
     text = request.json
-    cursor.execute("INSERT INTO thoughts (text) VALUES (%s)", (text['thought'],))
-    database.commit()
+    insert_query = "INSERT INTO thoughts (text) VALUES (%s);"
+    cursor.execute(insert_query, (text['thought'],))
+    connection.commit()
     return jsonify(success=True)
 
 if __name__ == '__main__':
