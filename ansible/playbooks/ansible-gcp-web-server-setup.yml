@@ -16,6 +16,17 @@
         pkg: nginx
         state: present
 
+    - name: Install NGINX Prometheus exporter
+      apt:
+        pkg: prometheus-nginx-exporter
+        force_apt_get: true
+        state: present
+    
+    - name: Copy NGINX configuration file that allows exporter
+      copy:
+        src: "nginx_default_config"
+        dest: "/etc/nginx/sites-available/default"
+
     - name: Install Python3 and pip
       apt:
         name:
@@ -46,21 +57,25 @@
     #   become: yes
     #   ansible.builtin.shell: cd /var/www/html/application/scripts && sudo ./kill_process_on_port.sh
 
-    - name: Bind gunicorn
-      become: yes
-      ansible.builtin.shell: cd /var/www/html/application && nohup gunicorn --bind 0.0.0.0:8000 app:app > /dev/null 2>&1 &
-      #register: /output.txt
-      #raw: cd /var/www/html/application && nohup gunicorn --bind 0.0.0.0:8000 app:app > /dev/null 2>&1 &
-
     - name: Allow Port 8000
       ufw:
         rule: allow
         port: 8000
 
-    - name: Allow Port 9100
+    - name: Allow Port 9113
       ufw:
         rule: allow
-        port: 9100
+        port: 9113
+
+    - name: Bind gunicorn and enable prometheus exporter
+      become: yes
+      ansible.builtin.shell: cd /var/www/html/application && prometheus-nginx-exporter && nohup gunicorn --bind 0.0.0.0:8000 app:app > /dev/null 2>&1 &
+      #register: /output.txt
+      #raw: cd /var/www/html/application && nohup gunicorn --bind 0.0.0.0:8000 app:app > /dev/null 2>&1 &
+
+    #- name: Enable prometheus exporter
+      #become: yes
+      #ansible.builtin.shell: prometheus-nginx-exporter
 
   handlers:
     - name: restart nginx

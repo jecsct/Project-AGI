@@ -44,3 +44,6 @@ terraform.rc
 
 ### Vagrant Patch ###
 *.box
+gcphosts
+terraform/outputs
+Vagrantfile
