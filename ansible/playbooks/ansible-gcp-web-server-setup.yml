@@ -37,6 +37,14 @@
           - pymysql
           - gunicorn
         state: present
+    
+    # - name: Give Script permissions
+    #   become: yes
+    #   ansible.builtin.shell: cd /var/www/html/application/scripts && sudo chmod +x kill_proc_port_8000.sh
+    
+    # - name: Execute script
+    #   become: yes
+    #   ansible.builtin.shell: cd /var/www/html/application/scripts && sudo ./kill_process_on_port.sh
 
     - name: Bind gunicorn
       become: yes

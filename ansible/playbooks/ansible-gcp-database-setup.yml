@@ -20,7 +20,19 @@
         - python3-mysqldb
         - libmysqlclient-dev
       become: yes
-       
+    
+    - name: Install pip
+      apt:
+        name: python3-pip 
+        state: present
+      become: yes
+
+    - name: Update MySQL Connector
+      pip:
+        name: mysql-connector-python
+        state: latest
+      become: yes
+    
     - name: Start and Enable the mysql service
       service:
          name: mysql
@@ -34,7 +46,7 @@
         login_unix_socket: /var/run/mysqld/mysqld.sock
         host: localhost
         login_user: root
-        login_password: ''
+        login_password: '{{ root_password }}'
         state: present
 
     - name: Create admin user for remote access
@@ -98,6 +110,7 @@
           - flask
           - requests
           - pymysql
+          - mysql.connector
           - cryptography
           - gunicorn
         state: present

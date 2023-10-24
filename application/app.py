@@ -1,3 +1,4 @@
+from cgitb import text
 from flask import Flask, render_template, request, redirect
 from config import send1, get1, quote1
 import requests
