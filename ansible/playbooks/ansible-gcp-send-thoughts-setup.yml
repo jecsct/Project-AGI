@@ -38,7 +38,7 @@
         name:
           - flask
           - requests
-          - pymysql
+          - mysql.connector
           - gunicorn
         state: present
 

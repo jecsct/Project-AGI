@@ -1,3 +1,4 @@
+from cgitb import text
 from flask import Flask, render_template, request, redirect
 from config import send1, get1, quote1
 import requests
@@ -21,10 +22,16 @@ def index():
 def home():
     return render_template('home.html')
 
+# @app.route('/hub')
+# def hub():
+#     response = requests.get("http://" + get1 + ":8002/get_thoughts_service")
+#     return render_template('hub.html', texts=response.json())
+
 @app.route('/hub')
 def hub():
     response = requests.get("http://" + get1 + ":8002/get_thoughts_service")
-    return render_template('hub.html', texts=response.json())
+    thoughts = response.json().get('thoughts', [])  
+    return render_template('hub.html', texts=thoughts)
 
 @app.route('/quote')
 def quote():
