@@ -49,6 +49,11 @@
         rule: allow
         port: 8000
 
+    - name: Allow Port 9100
+      ufw:
+        rule: allow
+        port: 9100
+
   handlers:
     - name: restart nginx
       service:

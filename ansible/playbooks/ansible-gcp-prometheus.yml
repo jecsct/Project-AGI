@@ -28,6 +28,11 @@
         pkg: ['prometheus']
         state: latest
     
+    - name: Allow Port 9090
+      ufw:
+        rule: allow
+        port: 9090
+    
     - name: Start and enable Prometheus service
       service:
         name: prometheus

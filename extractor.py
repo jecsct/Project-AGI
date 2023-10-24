@@ -14,15 +14,16 @@ ip_mapping = {
     "balancer": ip_addresses[0],
     "database": ip_addresses[1],
     "get1": ip_addresses[2],
-    "quote1": ip_addresses[3],
-    "send1": ip_addresses[4],
-    "web1": ip_addresses[5],
-    "web2": ip_addresses[6]
+    "grafana": ip_addresses[3],
+    "prometheus":ip_addresses[4],
+    "quote1": ip_addresses[5],
+    "send1": ip_addresses[6],
+    "web1": ip_addresses[7],
+    "web2": ip_addresses[8]
 }
 
 # Extract specific values in the required format
 required_ips = {key: f"{key} = \"{value}\"" for key, value in ip_mapping.items() if key in ["send1", "quote1", "get1", "database"]}
-
 # Overwrite the file with the new lines
 with open('application/config.py', 'w') as file:
     for line in required_ips.values():
