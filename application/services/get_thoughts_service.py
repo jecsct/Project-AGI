@@ -29,6 +29,7 @@ def hub():
     query = "SELECT text FROM thoughts;"
     cursor.execute(query)
     results = cursor.fetchall()
+    
     return {'thoughts': [row[0] for row in results]}
 
 if __name__ == '__main__':

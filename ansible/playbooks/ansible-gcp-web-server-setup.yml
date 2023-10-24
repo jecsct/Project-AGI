@@ -67,15 +67,15 @@
         rule: allow
         port: 9113
 
-    - name: Bind gunicorn and enable prometheus exporter
+    - name: Bind gunicorn
       become: yes
-      ansible.builtin.shell: cd /var/www/html/application && prometheus-nginx-exporter && nohup gunicorn --bind 0.0.0.0:8000 app:app > /dev/null 2>&1 &
+      ansible.builtin.shell: cd /var/www/html/application && nohup gunicorn --bind 0.0.0.0:8000 app:app > /dev/null 2>&1 &
       #register: /output.txt
       #raw: cd /var/www/html/application && nohup gunicorn --bind 0.0.0.0:8000 app:app > /dev/null 2>&1 &
 
-    #- name: Enable prometheus exporter
-      #become: yes
-      #ansible.builtin.shell: prometheus-nginx-exporter
+    - name: Enable prometheus exporter
+      become: yes
+      ansible.builtin.shell: cd && prometheus-nginx-exporter &
 
   handlers:
     - name: restart nginx
