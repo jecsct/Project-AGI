@@ -1,0 +1,46 @@
+[0m[1mgoogle_compute_firewall.send_thought_rules: Refreshing state... [id=projects/agisit-project-g1/global/firewalls/send][0m
+[0m[1mgoogle_compute_instance.quote[0]: Refreshing state... [id=projects/agisit-project-g1/zones/europe-west2-c/instances/quote1][0m
+[0m[1mgoogle_compute_instance.web[0]: Refreshing state... [id=projects/agisit-project-g1/zones/europe-west2-c/instances/web1][0m
+[0m[1mgoogle_compute_instance.grafana: Refreshing state... [id=projects/agisit-project-g1/zones/europe-west1-c/instances/grafana][0m
+[0m[1mgoogle_compute_firewall.database_rules: Refreshing state... [id=projects/agisit-project-g1/global/firewalls/database][0m
+[0m[1mgoogle_compute_firewall.frontend_rules: Refreshing state... [id=projects/agisit-project-g1/global/firewalls/frontend][0m
+[0m[1mgoogle_compute_instance.balancer: Refreshing state... [id=projects/agisit-project-g1/zones/europe-west2-c/instances/balancer][0m
+[0m[1mgoogle_compute_instance.web[1]: Refreshing state... [id=projects/agisit-project-g1/zones/europe-west2-c/instances/web2][0m
+[0m[1mgoogle_compute_firewall.quote_rules: Refreshing state... [id=projects/agisit-project-g1/global/firewalls/quote][0m
+[0m[1mgoogle_compute_instance.database: Refreshing state... [id=projects/agisit-project-g1/zones/europe-west2-c/instances/database][0m
+[0m[1mgoogle_compute_instance.get[0]: Refreshing state... [id=projects/agisit-project-g1/zones/europe-west2-c/instances/get1][0m
+[0m[1mgoogle_compute_firewall.grafana_rules: Refreshing state... [id=projects/agisit-project-g1/global/firewalls/grafana][0m
+[0m[1mgoogle_compute_firewall.get_thought_rules: Refreshing state... [id=projects/agisit-project-g1/global/firewalls/get][0m
+[0m[1mgoogle_compute_instance.send[0]: Refreshing state... [id=projects/agisit-project-g1/zones/europe-west2-c/instances/send1][0m
+[0m[1mgoogle_compute_firewall.prometheus_rules: Refreshing state... [id=projects/agisit-project-g1/global/firewalls/prometheus][0m
+[0m[1mgoogle_compute_instance.prometheus: Refreshing state... [id=projects/agisit-project-g1/zones/europe-west1-c/instances/prometheus][0m
+[0m[1mgoogle_compute_firewall.web_rules: Refreshing state... [id=projects/agisit-project-g1/global/firewalls/web][0m
+
+[0m[1m[32mNo changes.[0m[1m Your infrastructure matches the configuration.[0m
+
+[0mTerraform has compared your real infrastructure against your configuration
+and found no differences, so no changes are needed.
+[0m[1m[32m
+Apply complete! Resources: 0 added, 0 changed, 0 destroyed.
+[0m[0m[1m[32m
+Outputs:
+
+[0mbalancer = "34.89.41.57"
+balancer_ssh = "https://www.googleapis.com/compute/v1/projects/agisit-project-g1/zones/europe-west2-c/instances/balancer"
+database = "34.89.52.78"
+database_ssh = "https://www.googleapis.com/compute/v1/projects/agisit-project-g1/zones/europe-west2-c/instances/database"
+get_thoughts_IPs = tolist([
+  "get1 = 34.142.10.79",
+])
+grafana = "35.195.148.153"
+prometheus = "34.22.231.253"
+quote_IPs = tolist([
+  "quote1 = 34.89.100.19",
+])
+send_thoughts_IPs = tolist([
+  "send1 = 34.89.114.118",
+])
+web_IPs = tolist([
+  "web1 = 35.246.82.79",
+  "web2 = 34.147.224.117",
+])

@@ -66,6 +66,13 @@ prometheus
 [grafana]
 grafana
 
+[monitor]
+web1
+web2
+get1
+send1
+quote1
+
 [targets]
 balancer
 database

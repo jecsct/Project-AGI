@@ -15,6 +15,17 @@
       apt:
         pkg: nginx
         state: present
+    
+    - name: Install NGINX Prometheus exporter
+      apt:
+        pkg: prometheus-nginx-exporter
+        force_apt_get: true
+        state: present
+    
+    - name: Copy NGINX configuration file that allows exporter
+      copy:
+        src: "nginx_default_config"
+        dest: "/etc/nginx/sites-available/default"
 
     - name: Install Python3 and pip
       apt:
@@ -52,6 +63,20 @@
       ufw:
         rule: allow
         port: 8001
+    
+    - name: Allow Port 9113
+      ufw:
+        rule: allow
+        port: 9113
+    
+    - name: Reload nginx
+      become: yes
+      ansible.builtin.shell: sudo systemctl restart nginx
+
+    - name: Enable prometheus exporter
+      become: yes
+      ansible.builtin.shell: nohup prometheus-nginx-exporter > /dev/null 2>&1 &
+
 
   handlers:
     - name: restart nginx

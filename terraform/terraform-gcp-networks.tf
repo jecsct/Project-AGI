@@ -23,7 +23,7 @@ resource "google_compute_firewall" "quote_rules" {
 
   allow {
     protocol = "tcp"
-    ports = ["8001"]
+    ports = ["8001","9113"]
   }
 
   source_ranges = ["0.0.0.0/0"]
@@ -36,7 +36,7 @@ resource "google_compute_firewall" "get_thought_rules" {
 
   allow {
     protocol = "tcp"
-    ports = ["8002"]
+    ports = ["8002","9113"]
   }
 
   source_ranges = ["0.0.0.0/0"]
@@ -49,7 +49,7 @@ resource "google_compute_firewall" "send_thought_rules" {
 
   allow {
     protocol = "tcp"
-    ports = ["8003"]
+    ports = ["8003","9113"]
   }
 
   source_ranges = ["0.0.0.0/0"]
