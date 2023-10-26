@@ -67,6 +67,14 @@
         rule: allow
         port: 9113
 
+    # - name: Bind gunicorn
+    #   become: yes
+    #   ansible.builtin.shell: cd /var/www/html/application && nohup gunicorn --bind 0.0.0.0:8000 app:app > /dev/null 2>&1 &
+
+    # - name: kill previous execution
+    #   become: yes
+    #   ansible.builtin.shell: sudo fuser -k 8000/tcp
+
     - name: Bind gunicorn
       become: yes
       ansible.builtin.shell: cd /var/www/html/application && nohup gunicorn --bind 0.0.0.0:8000 app:app > /dev/null 2>&1 &

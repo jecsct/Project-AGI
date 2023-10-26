@@ -23,7 +23,7 @@ ip_mapping = {
 }
 
 # Extract specific values in the required format
-required_ips = {key: f"{key} = \"{value}\"" for key, value in ip_mapping.items() if key in ["send1", "quote1", "get1", "database"]}
+required_ips = {key: f"{key} = \"{value}\"" for key, value in ip_mapping.items() if key in ["send1", "quote1", "get1", "database","balancer"]}
 # Overwrite the file with the new lines
 with open('application/config.py', 'w') as file:
     for line in required_ips.values():

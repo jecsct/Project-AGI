@@ -46,6 +46,12 @@ frontend hafrontend
   mode http
   default_backend habackend
 
+#  TEM DE SER POSTO HA MAO NO SERVER SENAO CRASHA NS PK
+#  acl is_quote path /quote
+#  acl is_quote path_beg /quote
+#  use_backend quote_microservice if is_quote
+
+
 #---------------------------------------------------------------------
 # BackEnd roundrobin as balance algorithm
 #---------------------------------------------------------------------
@@ -55,6 +61,12 @@ backend habackend
   {% for host in groups['web'] %}
     server {{ host }} {{ hostvars[host]['ansible_default_ipv4']['address'] }}:8000 check
   {% endfor %}
+
+#  TEM DE SER POSTO HA MAO NO SERVER SENAO CRASHA NS PK
+#  backend quote_microservice
+#  mode http
+#  balance roundrobin
+#        server quote1 <ip_do_server>:8001 check
 
 #---------------------------------------------------------------------
 # HAProxy Monitoring Config URI

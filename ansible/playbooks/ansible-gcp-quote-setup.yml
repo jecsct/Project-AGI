@@ -25,8 +25,8 @@
 
     - name: Deploy Flask Content
       ansible.builtin.synchronize:
-        src: /home/vagrant/project/application/services/quote_service.py
-        dest: /var/www/html/quote_service.py
+        src: /home/vagrant/project/application
+        dest: /var/www/html/
 
     - name: Install required pip packages
       pip:
@@ -36,9 +36,17 @@
           - gunicorn
         state: present
 
+    # - name: Bind gunicorn
+    #   become: yes
+    #   ansible.builtin.shell: cd /var/www/html/application/services && nohup gunicorn --bind 0.0.0.0:8001 quote_service:app > /dev/null 2>&1 &
+
+    # - name: kill previous execution
+    #   become: yes
+    #   ansible.builtin.shell: sudo fuser -k 8001/tcp
+
     - name: Bind gunicorn
       become: yes
-      ansible.builtin.shell: cd /var/www/html && nohup gunicorn --bind 0.0.0.0:8001 quote_service:app > /dev/null 2>&1 &
+      ansible.builtin.shell: cd /var/www/html/application/services && nohup gunicorn --bind 0.0.0.0:8001 quote_service:app > /dev/null 2>&1 &
 
     - name: Allow Port 8001
       ufw:

@@ -1,6 +1,6 @@
 from cgitb import text
 from flask import Flask, render_template, request, redirect
-from config import send1, get1, quote1
+from config import send1, get1, balancer
 import requests
 import re
 
@@ -35,9 +35,8 @@ def hub():
 
 @app.route('/quote')
 def quote():
-    response = requests.get("http://" + quote1 + ":8001/quote_service")
-    text = response.json()['quote'] + " - " + response.json()['author']
-    return render_template('daily.html', quote=text)
+    requests.get("http://"+ balancer +"/quote")
+    return "ALL GOOD MAN"
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=8000, debug=True)
