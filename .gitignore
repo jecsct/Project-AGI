@@ -7,9 +7,6 @@ agisit-project-g1-key.json
 /terraform/.terraform.lock.hcl
 /terraform/terraform.tfstate
 /terraform/terraform.tfstate.backup
-/terraform/outputs.tf
-/terraform/terraform-gcp-variables.tf
-/terraform/terraform-gcp-provider.tf
 
 # .tfstate files
 *.tfstate
