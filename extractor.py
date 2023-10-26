@@ -17,13 +17,14 @@ ip_mapping = {
     "grafana": ip_addresses[3],
     "prometheus":ip_addresses[4],
     "quote1": ip_addresses[5],
-    "send1": ip_addresses[6],
-    "web1": ip_addresses[7],
-    "web2": ip_addresses[8]
+    "quote2": ip_addresses[6],
+    "send1": ip_addresses[7],
+    "web1": ip_addresses[8],
+    "web2": ip_addresses[9]
 }
 
 # Extract specific values in the required format
-required_ips = {key: f"{key} = \"{value}\"" for key, value in ip_mapping.items() if key in ["send1", "quote1", "get1", "database","balancer"]}
+required_ips = {key: f"{key} = \"{value}\"" for key, value in ip_mapping.items() if key in ["send1", "get1", "database","balancer"]}
 # Overwrite the file with the new lines
 with open('application/config.py', 'w') as file:
     for line in required_ips.values():

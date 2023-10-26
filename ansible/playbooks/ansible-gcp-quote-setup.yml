@@ -36,13 +36,13 @@
           - gunicorn
         state: present
 
-    # - name: Bind gunicorn
-    #   become: yes
-    #   ansible.builtin.shell: cd /var/www/html/application/services && nohup gunicorn --bind 0.0.0.0:8001 quote_service:app > /dev/null 2>&1 &
+    - name: Bind gunicorn
+      become: yes
+      ansible.builtin.shell: cd /var/www/html/application/services && nohup gunicorn --bind 0.0.0.0:8001 quote_service:app > /dev/null 2>&1 &
 
-    # - name: kill previous execution
-    #   become: yes
-    #   ansible.builtin.shell: sudo fuser -k 8001/tcp
+    - name: kill previous execution
+      become: yes
+      ansible.builtin.shell: sudo fuser -k 8001/tcp
 
     - name: Bind gunicorn
       become: yes

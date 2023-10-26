@@ -44,16 +44,7 @@ terraform.rc
 
 ### Vagrant Patch ###
 *.box
-<<<<<<< HEAD
 gcphosts
 terraform/outputs
 Vagrantfile
-=======
-
-
-### Custom config file ###
-
 /aplication/config.py
-/terraform/outputs
-gcphosts
->>>>>>> 2cb4ec65143d1e52a2e037a22af69a4ecf04841a

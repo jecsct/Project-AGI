@@ -1,5 +1,5 @@
 from flask import Flask
-from config import db
+from config import database
 import mysql.connector
 
 app = Flask(__name__)
@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 # MySQL Configuration
 db_config = {
-    'host': db,
+    'host': database,
     'user': 'admin',
     'password': 'admin',
     'database': 'notes',

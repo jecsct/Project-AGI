@@ -48,14 +48,6 @@
           - pymysql
           - gunicorn
         state: present
-    
-    # - name: Give Script permissions
-    #   become: yes
-    #   ansible.builtin.shell: cd /var/www/html/application/scripts && sudo chmod +x kill_proc_port_8000.sh
-    
-    # - name: Execute script
-    #   become: yes
-    #   ansible.builtin.shell: cd /var/www/html/application/scripts && sudo ./kill_process_on_port.sh
 
     - name: Allow Port 8000
       ufw:
@@ -67,19 +59,17 @@
         rule: allow
         port: 9113
 
-    # - name: Bind gunicorn
-    #   become: yes
-    #   ansible.builtin.shell: cd /var/www/html/application && nohup gunicorn --bind 0.0.0.0:8000 app:app > /dev/null 2>&1 &
+    - name: Bind gunicorn
+      become: yes
+      ansible.builtin.shell: cd /var/www/html/application && nohup gunicorn --bind 0.0.0.0:8000 app:app > /dev/null 2>&1 &
 
-    # - name: kill previous execution
-    #   become: yes
-    #   ansible.builtin.shell: sudo fuser -k 8000/tcp
+    - name: kill previous execution
+      become: yes
+      ansible.builtin.shell: sudo fuser -k 8000/tcp
 
     - name: Bind gunicorn
       become: yes
       ansible.builtin.shell: cd /var/www/html/application && nohup gunicorn --bind 0.0.0.0:8000 app:app > /dev/null 2>&1 &
-      #register: /output.txt
-      #raw: cd /var/www/html/application && nohup gunicorn --bind 0.0.0.0:8000 app:app > /dev/null 2>&1 &
 
     - name: Reload nginx
       become: yes

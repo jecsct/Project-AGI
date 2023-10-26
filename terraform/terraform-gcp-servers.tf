@@ -87,7 +87,7 @@ resource "google_compute_instance" "database" {
 
 ###########  Quote Service   #############
 resource "google_compute_instance" "quote" {
-    count = 1
+    count = 2
     name = "quote${count.index+1}"
     machine_type = var.GCP_MACHINE_TYPE
     zone = var.GCP_ZONE
@@ -167,7 +167,7 @@ resource "google_compute_instance" "get" {
 resource "google_compute_instance" "prometheus" {
     name = "prometheus"
     machine_type = var.GCP_MACHINE_TYPE
-    zone = "europe-west1-c" #we can't have more than 8 IPs in a given region, so Prometheus and Grafana are in other region
+    zone = "europe-west4-b" #we can't have more than 8 IPs in a given region, so Prometheus and Grafana are in other region
 
     boot_disk {
         initialize_params {
@@ -194,7 +194,7 @@ resource "google_compute_instance" "prometheus" {
 resource "google_compute_instance" "grafana" {
     name = "grafana"
     machine_type = var.GCP_MACHINE_TYPE
-    zone = "europe-west1-c"
+    zone = "europe-west4-b"
 
     boot_disk {
         initialize_params {
