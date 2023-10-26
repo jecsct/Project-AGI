@@ -48,3 +48,5 @@ gcphosts
 terraform/outputs
 Vagrantfile
 /aplication/config.py
+id_rsa
+id_rsa.pub
