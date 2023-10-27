@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 from config import database
 import mysql.connector
 
@@ -23,10 +23,13 @@ cursor.execute(query)
 
 @app.route('/get_thoughts_service', methods=['GET'])
 def hub():
-    query = "SELECT text FROM thoughts;"
-    cursor.execute(query)
-    results = cursor.fetchall()
-    return {'thoughts': [row[0] for row in results]}
+    connection = mysql.connector.connect(**db_config)
+    cursor = connection.cursor()
+    cursor.execute("SELECT text FROM thoughts;")
+    data = cursor.fetchall()
+    thoughts = [row[0] for row in data]
+    connection.close()
+    return jsonify({'thoughts': thoughts})
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=8002)

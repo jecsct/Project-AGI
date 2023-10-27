@@ -25,10 +25,9 @@ def home():
 @app.route('/hub')
 def hub():
     response = requests.get("http://" + get1 + ":8002/get_thoughts_service")
-    thoughts = response.json().get('thoughts', [])  
-    return render_template('hub.html', texts=thoughts)
+    return render_template('hub.html', texts=response.json().get('thoughts', []))
 
-@app.route('/quote')
+@app.route('/quote_page')
 def quote():
     response = requests.get("http://"+ balancer +"/quote")
     text = response.json()['quote'] + " - " + response.json()['author']
