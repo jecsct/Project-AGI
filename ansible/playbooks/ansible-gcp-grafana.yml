@@ -47,6 +47,21 @@
       copy:
         src: "grafana.ini"
         dest: "/etc/grafana/grafana.ini"
+    
+    - name: Copy Grafana dashboard
+      copy:
+        src: "grafana_dashboard.json"
+        dest: "/var/lib/grafana/dashboard.json"
+    
+    - name: Copy Grafana dashboards provisioning
+      copy:
+        src: "grafana_dashboards.yml"
+        dest: "/etc/grafana/provisioning/dashboards/default.yaml"
+    
+    - name: Copy Grafana datasource
+      copy:
+        src: "grafana_datasource.yml"
+        dest: "/etc/grafana/provisioning/datasources/default.yaml"
       notify: restart grafana
 
   handlers:

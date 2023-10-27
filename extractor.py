@@ -8,6 +8,7 @@ with open('terraform/outputs', 'r') as file:
 
 # Extract IP addresses using regular expressions
 ip_addresses = re.findall(r'[0-9]+(?:\.[0-9]+){3}', terraform_output)
+print(ip_addresses)
 
 # Mapping names to IP addresses
 ip_mapping = {

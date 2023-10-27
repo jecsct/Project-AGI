@@ -9,31 +9,7 @@ scrape_configs:
   - job_name: 'nginx'
     scrape_interval: 5s
     static_configs:
-      - targets: [web1:9113, web2:9113,get1:9113,quote1:9113,send1:9113]
-    #relabel_configs:
-      #- source_labels: [__address__]
-        #target_label: instance
-        #regex: '(.+):9100'
-        #replacement: '$1'
-      #- source_labels: [__address__]
-        #target_label: __address__
-        #replacement: 'node_exporter:9100'
-
-  #- job_name: 'blackbox'
-    #metrics_path: /probe
-    #params:
-      #module: [http_2xx]
-    #static_configs:
-      #- targets:
-        #- http://web1/nginx_status
-        #- http://web2/nginx_status
-    #relabel_configs:
-      #- source_labels: [__address__]
-        #target_label: instance
-      #- source_labels: [__param_target]
-        #target_label: target
-      #- target_label: __address__
-        #replacement: blackbox_exporter:9115
+      - targets: [web1:9113, web2:9113,get1:9113,quote1:9113,quote2:9113,send1:9113]
 
 #rule_files:
   #- /etc/prometheus/alerting-rules.yml  # Path to alerting rules file
