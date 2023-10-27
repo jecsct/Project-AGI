@@ -2,14 +2,6 @@
 # To output variables, follow pattern:
 # value = TYPE.NAME.ATTR
 
-output "balancer_ssh" {
- value = google_compute_instance.balancer.self_link
-}
-
-output "database_ssh" {
- value = google_compute_instance.database.self_link
-}
-
 output "balancer" {
     value = join(" ", google_compute_instance.balancer.*.network_interface.0.access_config.0.nat_ip)
 }

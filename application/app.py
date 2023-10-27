@@ -30,8 +30,9 @@ def hub():
 
 @app.route('/quote')
 def quote():
-    requests.get("http://"+ balancer +"/quote")
-    return "ALL GOOD MAN"
+    response = requests.get("http://"+ balancer +"/quote")
+    text = response.json()['quote'] + " - " + response.json()['author']
+    return render_template('daily.html', quote=text)
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=8000, debug=True)
