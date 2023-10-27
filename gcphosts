@@ -1,13 +1,13 @@
-balancer	ansible_host=34.105.183.46 ansible_user=ubuntu ansible_connection=ssh
-database	ansible_host=34.147.128.134 ansible_user=ubuntu ansible_connection=ssh
-get1	ansible_host=35.246.115.176 ansible_user=ubuntu ansible_connection=ssh
-grafana	ansible_host=34.32.212.162 ansible_user=ubuntu ansible_connection=ssh
-prometheus	ansible_host=35.204.189.230 ansible_user=ubuntu ansible_connection=ssh
-quote1	ansible_host=34.142.51.204 ansible_user=ubuntu ansible_connection=ssh
-quote2	ansible_host=35.246.62.64 ansible_user=ubuntu ansible_connection=ssh
-send1	ansible_host=34.142.123.90 ansible_user=ubuntu ansible_connection=ssh
-web1	ansible_host=34.89.109.100 ansible_user=ubuntu ansible_connection=ssh
-web2	ansible_host=34.142.115.102 ansible_user=ubuntu ansible_connection=ssh
+balancer	ansible_host=34.105.237.191 ansible_user=ubuntu ansible_connection=ssh
+database	ansible_host=34.89.78.103 ansible_user=ubuntu ansible_connection=ssh
+get1	ansible_host=34.105.143.176 ansible_user=ubuntu ansible_connection=ssh
+grafana	ansible_host=34.90.61.158 ansible_user=ubuntu ansible_connection=ssh
+prometheus	ansible_host=34.90.217.85 ansible_user=ubuntu ansible_connection=ssh
+quote1	ansible_host=34.89.113.65 ansible_user=ubuntu ansible_connection=ssh
+quote2	ansible_host=35.246.123.103 ansible_user=ubuntu ansible_connection=ssh
+send1	ansible_host=34.89.18.66 ansible_user=ubuntu ansible_connection=ssh
+web1	ansible_host=34.142.30.175 ansible_user=ubuntu ansible_connection=ssh
+web2	ansible_host=34.105.146.225 ansible_user=ubuntu ansible_connection=ssh
 
 
 [osmgmt]
