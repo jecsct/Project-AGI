@@ -1,0 +1,83 @@
+---
+- hosts: send_thought
+  gather_facts: True
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
+
+  tasks:
+    - name: Add NGINX Repository
+      apt_repository:
+        repo: ppa:nginx/stable
+        state: present
+
+    - name: Install NGINX
+      apt:
+        pkg: nginx
+        state: present
+
+    - name: Install NGINX Prometheus exporter
+      apt:
+        pkg: prometheus-nginx-exporter
+        force_apt_get: true
+        state: present
+    
+    - name: Copy NGINX configuration file that allows exporter
+      copy:
+        src: "nginx_default_config"
+        dest: "/etc/nginx/sites-available/default"
+
+    - name: Install Python3 and pip
+      apt:
+        name:
+          - python3
+          - pip
+        state: present
+
+    - name: Deploy Flask Content
+      ansible.builtin.synchronize:
+        src: /home/vagrant/project/application/services/send_thought_service.py
+        dest: /var/www/html/send_thought_service.py
+
+    - name: Deploy Host File
+      ansible.builtin.synchronize:
+        src: /home/vagrant/project/application/config.py
+        dest: /var/www/html/config.py
+
+    - name: Install required pip packages
+      pip:
+        name:
+          - flask
+          - requests
+          - mysql.connector
+          - gunicorn
+        state: present
+
+    - name: Bind gunicorn
+      become: yes
+      ansible.builtin.shell: cd /var/www/html && nohup gunicorn --bind 0.0.0.0:8003 send_thought_service:app > /dev/null 2>&1 &
+
+    - name: Allow Port 8003
+      ufw:
+        rule: allow
+        port: 8003
+    
+    - name: Allow Port 9113
+      ufw:
+        rule: allow
+        port: 9113
+    
+    - name: Reload nginx
+      become: yes
+      ansible.builtin.shell: sudo systemctl restart nginx
+
+    - name: Enable prometheus exporter
+      become: yes
+      ansible.builtin.shell: nohup prometheus-nginx-exporter > /dev/null 2>&1 &
+
+
+  handlers:
+    - name: restart nginx
+      service:
+        name: nginx
+        state: restarted

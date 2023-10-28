@@ -1,0 +1,28 @@
+---
+- name: targets
+  ansible.builtin.import_playbook: playbooks/ansible-gcp-critical-config.yml
+
+- name: database
+  ansible.builtin.import_playbook: playbooks/ansible-gcp-database-setup.yml
+
+- name: quote
+  ansible.builtin.import_playbook: playbooks/ansible-gcp-quote-setup.yml
+
+- name: get_thoughts
+  ansible.builtin.import_playbook: playbooks/ansible-gcp-get-thoughts-setup.yml
+
+- name: send_thoughts
+  ansible.builtin.import_playbook: playbooks/ansible-gcp-send-thoughts-setup.yml
+
+- name: web
+  ansible.builtin.import_playbook: playbooks/ansible-gcp-web-server-setup.yml
+
+- name: loadbalancer
+  ansible.builtin.import_playbook: playbooks/ansible-gcp-load-balancer-setup.yml
+
+- name: prometheus
+  ansible.builtin.import_playbook: playbooks/ansible-gcp-prometheus.yml
+
+- name: grafana
+  ansible.builtin.import_playbook: playbooks/ansible-gcp-grafana.yml
+

@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Thought Sharing</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="home" class="logo">Thought Sharing</a>
+					</header>
+
+				<!-- Nav -->
+					<nav id="nav">
+						<ul class="links">
+							<li><a href="home">Home</a></li>
+							<li class="active"><a href="hub">Global Musings Hub</a></li>
+							<li><a href="daily">Quotes</a></li>
+						</ul>
+						<ul class="icons">
+							<li><a href="https://gitlab.rnl.tecnico.ulisboa.pt/agisit/agisit23-g1" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Post -->
+							<section class="post">
+								<header class="major">
+									<h1>Global Musings<br />
+										Hub</h1>
+									<p>Explore a diverse array of thoughts and insights from around the world. Immerse yourself in a rich tapestry of ideas and perspectives, sourced globally to inspire, inform, and broaden your worldview. Engage with a vibrant community of thinkers and expand your horizons with every click.</p>
+								</header>
+								<div class="image main"><img src="{{ url_for('static', filename='images/pic01.jpg') }}" alt="" /></div>
+								</section>
+
+								<ul>
+									{% for text in texts %}
+										<li>{{ text }}</li>
+									{% endfor %}
+								</ul>
+
+					</div>
+
+				<!-- Copyright -->
+					<div id="copyright">
+						<ul><li>&copy; AGISIT 2023-2024</li><li>Group 1</a></li></ul>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+		<script src="{{ url_for('static', filename='assets/js/jquery.min.js') }}"></script>
+		<script src="{{ url_for('static', filename='assets/js/jquery.scrollex.min.js') }}"></script>
+		<script src="{{ url_for('static', filename='assets/js/jquery.scrolly.min.js') }}"></script>
+		<script src="{{ url_for('static', filename='assets/js/browser.min.js') }}"></script>
+		<script src="{{ url_for('static', filename='assets/js/breakpoints.min.js') }}"></script>
+		<script src="{{ url_for('static', filename='assets/js/util.js') }}"></script>
+		<script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+
+	</body>
+</html>

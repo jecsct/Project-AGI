@@ -1,0 +1,121 @@
+---
+- hosts: database
+  gather_facts: True
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
+
+  vars_files:
+    - database_vars.yml
+
+  tasks:
+    - name: Installing Mysql
+      package:
+         name: "{{item}}"
+         state: present
+         update_cache: yes
+      loop:
+        - mysql-server
+        - mysql-client
+        - python3-mysqldb
+        - libmysqlclient-dev
+      become: yes
+    
+    - name: Install pip
+      apt:
+        name: python3-pip 
+        state: present
+      become: yes
+
+    - name: Update MySQL Connector
+      pip:
+        name: mysql-connector-python
+        state: latest
+      become: yes
+    
+    - name: Start and Enable the mysql service
+      service:
+         name: mysql
+         state: started
+         enabled: yes
+
+    - name: Set root user password
+      mysql_user:
+        name: root
+        password: "{{root_password}}"
+        login_unix_socket: /var/run/mysqld/mysqld.sock
+        host: localhost
+        login_user: root
+        login_password: '{{ root_password }}'
+        state: present
+
+    - name: Create admin user for remote access
+      mysql_user:
+        name: "{{admin_user}}"
+        password: "{{admin_password}}"
+        priv: '*.*:ALL'
+        host: '%'
+        append_privs: yes
+        login_user: root
+        login_password: "{{root_password}}"
+        state: present
+    
+    - name: Create Database 
+      mysql_db:
+        name: "{{db_name}}"
+        state: present
+        login_user: root
+        login_password: "{{root_password}}"
+    
+    - name: Enable remote logins
+      lineinfile:
+        path: /etc/mysql/mysql.conf.d/mysqld.cnf
+        regex: '^bind-address\s*=\s*127.0.0.1'
+        line: 'bind-address = 0.0.0.0'
+        backup: yes
+      notify:
+        - Restart mysql
+
+    - name: Execute MySQL Secure Installation
+      expect:
+        command: mysql_secure_installation
+        responses:
+          'Enter password for user root:': "{{ root_password }}"
+          'Press y\|Y for Yes, any other key for No': 'Y'
+          'Please enter 0 = LOW, 1 = MEDIUM and 2 = STRONG': "{{ password_validation_policy }}"
+          'Change the password for root \? \(\(Press y\|Y for Yes, any other key for No\)': 'n'
+          'Remove anonymous users\? \(Press y\|Y for Yes, any other key for No\)': 'Y'
+          'Disallow root login remotely\? \(Press y\|Y for Yes, any other key for No\)': 'Y'
+          'Remove test database and access to it\? \(Press y\|Y for Yes, any other key for No\)': 'Y'
+          'Reload privilege tables now\? \(Press y\|Y for Yes, any other key for No\)': 'Y'
+      environment:
+        MYSQL_PWD: "{{ root_password }}"
+
+  handlers:
+    - name: Restart mysql
+      service:
+        name: mysql
+        state: restarted
+
+    - name: Install Python and pip
+      apt:
+        name:
+          - python
+          - pip
+        state: present
+
+    - name: Install required packages in virtualenv
+      pip:
+        name:
+          - flask
+          - requests
+          - pymysql
+          - mysql.connector
+          - cryptography
+          - gunicorn
+        state: present
+
+    - name: Allow Port 3306
+      ufw:
+        rule: allow
+        port: 3306

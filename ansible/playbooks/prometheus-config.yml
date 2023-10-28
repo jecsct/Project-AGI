@@ -1,0 +1,20 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'prometheus'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['localhost:9090']
+  - job_name: 'nginx'
+    scrape_interval: 5s
+    static_configs:
+      - targets: [web1:9113, web2:9113,get1:9113,quote1:9113,quote2:9113,send1:9113]
+
+#rule_files:
+  #- /etc/prometheus/alerting-rules.yml  # Path to alerting rules file
+
+#alerting:
+  #alertmanagers:
+    #- static_configs:
+      #- targets: ['alertmanager:9093']
