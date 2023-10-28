@@ -27,7 +27,7 @@ def hub():
     response = requests.get("http://" + get1 + ":8002/get_thoughts_service")
     return render_template('hub.html', texts=response.json().get('thoughts', []))
 
-@app.route('/quotes')
+@app.route('/daily')
 def quote():
     response = requests.get("http://"+ balancer +"/quote")
     text = response.json()['quote'] + " - " + response.json()['author']
