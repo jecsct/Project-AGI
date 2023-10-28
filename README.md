@@ -5,7 +5,7 @@
 
 Our team has created a thought-sharing application that enables users to exchange and view diverse thoughts from all around the world. It also provides access to a repository of quotes through a dedicated service. The application securely stores all shared thoughts in a reliable and persistent MySQL database hosted on a dedicated server.
 
-Demonstration video available at:
+Demonstration video available at: https://youtu.be/vLheYQeKB8M
 
 ## Prerequisites
 
