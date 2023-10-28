@@ -73,6 +73,7 @@ web2
 get1
 send1
 quote1
+quote2
 
 [targets]
 balancer
