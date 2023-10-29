@@ -33,6 +33,7 @@ Both the frontend and backend microservices are equipped with custom load balanc
 
 For a visual representation, please refer to the following diagram.
 
+![Architecture](./images/diagram.png)
 
 ## Application Deployment
 
