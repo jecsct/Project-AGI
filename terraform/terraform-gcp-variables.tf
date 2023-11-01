@@ -1,6 +1,6 @@
 # Google Cloud Project ID
 variable "GCP_PROJECT_ID" {
-    default = "agisit-project-g1"
+    default = "probable-analog-402913"
 }
 
 # A list of machine types is found at: https://cloud.google.com/compute/docs/machine-types
